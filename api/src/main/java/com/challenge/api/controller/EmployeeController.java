@@ -1,13 +1,15 @@
 package com.challenge.api.controller;
 
 import com.challenge.api.model.Employee;
+import com.challenge.api.model.IEmployee;
 import com.challenge.api.service.EmployeeService;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
-    @Autowired
+
     private final EmployeeService _employeeService;
 
     public EmployeeController() {
@@ -49,7 +51,7 @@ public class EmployeeController {
      * @return Requested Employee if exists
      */
     @GetMapping("/{uuid}")
-    public Employee getEmployeeByUuid(UUID uuid) {
+    public Employee getEmployeeByUuid(@PathVariable UUID uuid) {
         // First, parse that UUID is valid
         if (uuid == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid UUID");
 
@@ -71,13 +73,13 @@ public class EmployeeController {
      * @return Newly created Employee
      */
     @PostMapping
-    public Employee createEmployee(Object requestBody) {
+    public Employee createEmployee(@RequestBody IEmployee requestBody) {
         // request body can realistically come in many forms: since requestBody is
-        // passed as an object, I'm assuming the payload was already parsed from raw 
+        // passed as an object, I'm assuming the payload was already parsed from raw
         // HTML/JSON format into an object that implements Employee.
         //
-        // If not parsed into a instanceof Employee, it's straightforward to assign
-        // the data to an IEmployee object.
+        // I changed the function signature to use the RequestBody annotation,
+        // but I think the logic should work for generic Object type!
 
         Employee newEmployee;
 

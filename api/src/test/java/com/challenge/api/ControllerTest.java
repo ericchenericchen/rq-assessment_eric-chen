@@ -28,7 +28,7 @@ class TestingWebApplicationTests {
 
     @Test
     void basicInsertAndReadTest() {
-        Employee testEmployee = new IEmployee();
+        IEmployee testEmployee = new IEmployee();
 
         testEmployee.setFirstName("eric");
         testEmployee.setLastName("chen");
